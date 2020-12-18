@@ -3,7 +3,7 @@ import {Row,Col,Model,Button,Form,Modal} from 'react-bootstrap';
 import SnackBar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 
-export default class ModelAddDepartment extends Component{
+export default class ModelUpdateDepartment extends Component{
 
     constructor(props){
         super(props);
@@ -18,22 +18,22 @@ export default class ModelAddDepartment extends Component{
 
     handleSubmit(event){
         event.preventDefault();
-        fetch('http://localhost:62489/api/Default/addDepart',{
+        fetch('http://localhost:62489/api/Default/updateDepart',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
                 'Content-Type':'application/json'
             },
             body:JSON.stringify({
-                id:null,
+                id:event.target.depid.value,
                 depname:event.target.depname.value
             })
          })
             .then(res=>res.json())
             .then((result)=>{
-                this.setState({snackbarOpen:true,messageDis:'New Department Added'})
+                this.setState({snackbarOpen:true,messageDis:'Department updated'})
                 console.log(result)
-                this.closeSnackBar();
+                
             },
             (error)=>{
                 this.setState({snackbarOpen:true,messageDis:'There was an error please open console'})
@@ -69,7 +69,7 @@ export default class ModelAddDepartment extends Component{
           >
             <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">
-                Add Departments
+                Update Departments
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -77,12 +77,16 @@ export default class ModelAddDepartment extends Component{
                 <Row>
                     <Col sm={12} md={8} lg={6}>
                     <Form onSubmit={this.handleSubmit}>
+                           <Form.Group id="depid">
+                                <Form.Label>Department id</Form.Label>
+                                <Form.Control type="text" name="depid" placeholder="Department id " disabled defaultValue={this.props.depid} required/>
+                            </Form.Group>
                             <Form.Group id="depname">
                                 <Form.Label>Department Name</Form.Label>
-                                <Form.Control type="text" name="depname" placeholder="Department Name" required/>
+                                <Form.Control type="text" name="depname" placeholder="Department Name" required defaultValue={this.props.depname}/>
                             </Form.Group>
                             <Form.Group>
-                                <Button variant="primary" type="submit">Submit</Button>
+                                <Button variant="primary" type="submit">Update</Button>
                             </Form.Group>
                       </Form>
                     </Col>

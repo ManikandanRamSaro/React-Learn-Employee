@@ -2,12 +2,13 @@ import React,{Component} from 'react';
 import {Table,Button} from 'react-bootstrap';
 import {ButtonToolbar} from 'react-bootstrap';
 import ModelAddDepartment from './ModelAddDepartment'; 
+import ModelUpdateDepartment from './ModelUpdateDepartment';
 export default class Department extends Component{
 
     constructor(props)
     {
         super(props);
-        this.state={arrayofObject:[],onModelShow:false};
+        this.state={arrayofObject:[],onModelShow:false,onModelShowUpdate:false};
     }
     componentDidMount() // method will executed after all commponents loaded into the application
     {
@@ -34,8 +35,11 @@ export default class Department extends Component{
 
     render()
     {
+        const {depid,depname}= this.state; // for Update Model popup
+
         const {arrayofObject} =this.state; //table binding properties
         const modelClose=()=>{this.setState({onModelShow:false})} // binding properties
+        const modelCloseUpdate=()=>{this.setState({onModelShowUpdate:false})} // binding properties for edit operation
         return(
             <div >
                 <div className="bg-success p-5 text-center">
@@ -45,7 +49,8 @@ export default class Department extends Component{
                         <thead>
                             <tr>
                                 <th>Department ID</th>
-                                <th>Department Name</th>                                
+                                <th>Department Name</th>         
+                                <th>Function</th>                                
                             </tr>
                         </thead>
                         <tbody>
@@ -53,6 +58,12 @@ export default class Department extends Component{
                                 <tr key={dep.id}>
                                     <td>{dep.id}</td>
                                     <td>{dep.depname}</td>
+                                    <td>
+                                    <ButtonToolbar> 
+                                        <Button variant="info" onClick={()=>this.setState({onModelShowUpdate:true,depid:dep.id,depname:dep.depname})} >Update</Button>
+                                        <ModelUpdateDepartment show={this.state.onModelShowUpdate} onHide={modelCloseUpdate} depid={depid} depname={depname} />
+                                    </ButtonToolbar> 
+                                    </td>
                                 </tr>
                             )}
 
