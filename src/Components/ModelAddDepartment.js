@@ -1,10 +1,19 @@
 import React,{Component} from 'react';
 import {Row,Col,Model,Button,Form,Modal} from 'react-bootstrap';
+import SnackBar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
 
 export default class ModelAddDepartment extends Component{
 
     constructor(props){
         super(props);
+
+        this.state={snackbarOpen:false,messageDis:''} // variables declared for Snack bar 
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    closeSnackBar =(event)=>{
+        this.setState({snackbarOpen:false})
     }
 
     handleSubmit(event){
@@ -22,17 +31,35 @@ export default class ModelAddDepartment extends Component{
          })
             .then(res=>res.json())
             .then((result)=>{
-                alert('Success');
+                this.setState({snackbarOpen:true,messageDis:'New Department Added'})
                 console.log(result)
             },
             (error)=>{
-                alert('error');
+                this.setState({snackbarOpen:true,messageDis:'There was an error please open console'})
                 console.log(error)
             
         })
     }
     render(){
         return(
+            <div className="container">
+                <SnackBar
+                anchorOrigin={{vertical:'bottom',horizontal:'center'}}
+                open={this.state.snackbarOpen}
+                autoHideDuration={3000}
+                onClose={this.closeSnackBar}
+                message={<span id="snk-msg-one">{this.state.messageDis}</span>}
+                action={[
+                    <IconButton
+                        key="close"
+                        aria-label="Close"
+                        color="inherit"
+                        onClick={this.closeSnackBar}>
+                        X
+                    </IconButton>
+                ]}
+                />
+
             <Modal
             {...this.props}
             size="lg"
@@ -67,6 +94,7 @@ export default class ModelAddDepartment extends Component{
               <Button onClick={this.props.onHide}>Close</Button>
             </Modal.Footer>
           </Modal>
+          </div>
         )
     }
 }
