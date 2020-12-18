@@ -32,8 +32,7 @@ export default class ModelAddDepartment extends Component{
             .then(res=>res.json())
             .then((result)=>{
                 this.setState({snackbarOpen:true,messageDis:'New Department Added'})
-                console.log(result)
-                this.closeSnackBar();
+                console.log(result) 
             },
             (error)=>{
                 this.setState({snackbarOpen:true,messageDis:'There was an error please open console'})

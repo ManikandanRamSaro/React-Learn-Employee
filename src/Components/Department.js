@@ -32,7 +32,32 @@ export default class Department extends Component{
     {
         this.loadDynamicData();   
     }
-
+    deleteDepartment(depid){
+        if(window.confirm('Do you want to delete data ?'))
+        {
+            fetch('http://localhost:62489/api/Default/deleteDepart',{
+                method:'POST',
+                headers:{
+                    'Accept':'application/json',
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify({
+                    id:depid,
+                    depname:null
+                })
+             })
+                .then(res=>res.json())
+                .then((result)=>{ 
+                    console.log(result) 
+                },
+                (error)=>{ 
+                    console.log(error)
+                
+            })
+        }
+       // event.preventDefault();
+        
+    }
     render()
     {
         const {depid,depname}= this.state; // for Update Model popup
@@ -45,7 +70,13 @@ export default class Department extends Component{
                 <div className="bg-success p-5 text-center">
                     <h5 className="text-white">Welcome to my Department page</h5>
                 </div>
-                <Table className="mt-5"  striped bordered hover>
+                <br/>
+                <ButtonToolbar> 
+                    <Button variant="primary" onClick={()=>this.setState({onModelShow:true})} >Add Department</Button>
+                    <ModelAddDepartment show={this.state.onModelShow} onHide={modelClose}/>
+                </ButtonToolbar> 
+
+                <Table className="mt-2"  striped bordered hover>
                         <thead>
                             <tr>
                                 <th>Department ID</th>
@@ -60,8 +91,12 @@ export default class Department extends Component{
                                     <td>{dep.depname}</td>
                                     <td>
                                     <ButtonToolbar> 
-                                        <Button variant="info" onClick={()=>this.setState({onModelShowUpdate:true,depid:dep.id,depname:dep.depname})} >Update</Button>
+                                        <Button variant="info" className="sm-2 mr-2" onClick={()=>this.setState({onModelShowUpdate:true,depid:dep.id,depname:dep.depname})} >Update</Button>
+                                        
+                                        <Button variant="danger" className="sm-2  mr-2"  onClick={()=>this.deleteDepartment(dep.id)}>Delete</Button>
+
                                         <ModelUpdateDepartment show={this.state.onModelShowUpdate} onHide={modelCloseUpdate} depid={depid} depname={depname} />
+                                        
                                     </ButtonToolbar> 
                                     </td>
                                 </tr>
@@ -69,10 +104,7 @@ export default class Department extends Component{
 
                         </tbody>
                 </Table>
-                <ButtonToolbar> 
-                    <Button variant="primary" onClick={()=>this.setState({onModelShow:true})} >Add Department</Button>
-                    <ModelAddDepartment show={this.state.onModelShow} onHide={modelClose}/>
-                    </ButtonToolbar> 
+             
             </div>
         );
     }
