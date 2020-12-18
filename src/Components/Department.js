@@ -1,11 +1,13 @@
 import React,{Component} from 'react';
-import {Table} from 'react-bootstrap';
+import {Table,Button} from 'react-bootstrap';
+import {ButtonToolbar} from 'react-bootstrap';
+import ModelAddDepartment from './ModelAddDepartment'; 
 export default class Department extends Component{
 
     constructor(props)
     {
         super(props);
-        this.state={arrayofObject:[]};
+        this.state={arrayofObject:[],onModelShow:false};
     }
     componentDidMount() // method will executed after all commponents loaded into the application
     {
@@ -13,13 +15,17 @@ export default class Department extends Component{
     }
 
     loadStaticData(){
-        this.setState({
-            arrayofObject:[{"depid":1,"depName":"React"},{"depid":2,"depName":"Angular"},{"depid":3,"depName":"Web API"}]
+        fetch('http://localhost:62489/api/default/GetDepartmentsList')
+        .then(response=>response.json())
+        .then(output=>{
+            this.setState({arrayofObject:output})
         })
+      //   this.setState({ arrayofObject:[{"id":1,"depname":"React"},{"id":2,"depname":"Angular"},{"id":3,"depname":"Web API"}] })  //static way to load data
     }
     render()
     {
-        const {arrayofObject} =this.state;
+        const {arrayofObject} =this.state; //table binding properties
+        const modelClose=()=>{this.setState({onModelShow:false})} // binding properties
         return(
             <div >
                 <div className="bg-success p-5 text-center">
@@ -34,14 +40,18 @@ export default class Department extends Component{
                         </thead>
                         <tbody>
                             {arrayofObject.map(dep=>
-                                <tr key="dep.depid">
-                                    <td>{dep.depid}</td>
-                                    <td>{dep.depName}</td>
+                                <tr key="dep.id">
+                                    <td>{dep.id}</td>
+                                    <td>{dep.depname}</td>
                                 </tr>
                             )}
 
                         </tbody>
                 </Table>
+                <ButtonToolbar> 
+                    <Button variant="primary" onClick={()=>this.setState({onModelShow:true})} >Add Department</Button>
+                    <ModelAddDepartment show={this.state.onModelShow} onHide={modelClose}/>
+                    </ButtonToolbar> 
             </div>
         );
     }
