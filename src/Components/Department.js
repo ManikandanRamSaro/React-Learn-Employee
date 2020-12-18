@@ -11,17 +11,27 @@ export default class Department extends Component{
     }
     componentDidMount() // method will executed after all commponents loaded into the application
     {
-        this.loadStaticData();
+        this.loadDynamicData();
+    }
+    
+    loadStaticData(){
+          this.setState({ arrayofObject:[{"id":1,"depname":"React"},{"id":2,"depname":"Angular"},{"id":3,"depname":"Web API"}] })  //static way to load data
     }
 
-    loadStaticData(){
+
+    loadDynamicData(){
         fetch('http://localhost:62489/api/default/GetDepartmentsList')
         .then(response=>response.json())
         .then(output=>{
             this.setState({arrayofObject:output})
         })
-      //   this.setState({ arrayofObject:[{"id":1,"depname":"React"},{"id":2,"depname":"Angular"},{"id":3,"depname":"Web API"}] })  //static way to load data
     }
+
+    componentDidUpdate()  // based on change event this will automatically load data
+    {
+        this.loadDynamicData();   
+    }
+
     render()
     {
         const {arrayofObject} =this.state; //table binding properties
@@ -31,7 +41,7 @@ export default class Department extends Component{
                 <div className="bg-success p-5 text-center">
                     <h5 className="text-white">Welcome to my Department page</h5>
                 </div>
-                <Table className="mt-5" stripped size="sm" hover bordered>
+                <Table className="mt-5"  striped bordered hover>
                         <thead>
                             <tr>
                                 <th>Department ID</th>
@@ -40,7 +50,7 @@ export default class Department extends Component{
                         </thead>
                         <tbody>
                             {arrayofObject.map(dep=>
-                                <tr key="dep.id">
+                                <tr key={dep.id}>
                                     <td>{dep.id}</td>
                                     <td>{dep.depname}</td>
                                 </tr>
