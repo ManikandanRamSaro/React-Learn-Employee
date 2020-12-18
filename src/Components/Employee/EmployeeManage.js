@@ -1,27 +1,26 @@
 import React,{Component} from 'react';
 import {Table,Button} from 'react-bootstrap';
-import {ButtonToolbar} from 'react-bootstrap';
-import ModelAddDepartment from './ModelAddDepartment'; 
-import ModelUpdateDepartment from './ModelUpdateDepartment';
-export default class Department extends Component{
+import {ButtonToolbar} from 'react-bootstrap'; 
+import AddEmployeeModel from './AddEmployeeModel';
+export default class EmployeeManage extends Component{
 
     constructor(props)
     {
         super(props);
         this.state={arrayofObject:[],onModelShow:false,onModelShowUpdate:false};
     }
-    componentDidMount() // method will executed after all commponents loaded into the application
+    componentDidMount()  
     {
         this.loadDynamicData();
     }
     
     loadStaticData(){
-          this.setState({ arrayofObject:[{"id":1,"depname":"React"},{"id":2,"depname":"Angular"},{"id":3,"depname":"Web API"}] })  //static way to load data
+          this.setState({ arrayofObject:[{"id":"1","name":"Shree","address":"","mobileNo":"","depid":"","role":"","dateat":""},{"id":"2","name":"Sai","address":"","mobileNo":"","depid":"","role":"","dateat":""}] })  //static way to load data
     }
 
 
     loadDynamicData(){
-        fetch('http://localhost:62489/api/default/GetDepartmentsList')
+        fetch('http://localhost:62489/api/default/GetEmplpoyeesList')
         .then(response=>response.json())
         .then(output=>{
             this.setState({arrayofObject:output})
@@ -80,38 +79,42 @@ export default class Department extends Component{
         const modelCloseUpdate=()=>{this.setState({onModelShowUpdate:false})} // binding properties for edit operation
         return(
             <div >
-                <div className="bg-success p-5 text-center">
-                    <h5 className="text-white">Welcome to my Department page</h5>
-                </div>
+                
                 <br/>
                 <ButtonToolbar> 
                     <Button variant="primary" onClick={()=>this.setState({onModelShow:true})} >Add Department</Button>
-                    <ModelAddDepartment show={this.state.onModelShow} onHide={modelClose}/>
+                    <AddEmployeeModel show={this.state.onModelShow} onHide={modelClose}/>
                 </ButtonToolbar> 
 
                 <Table className="mt-2"  striped bordered hover>
                         <thead>
                             <tr>
-                                <th>Department ID</th>
-                                <th>Department Name</th>         
+                                <th>ID</th>
+                                <th>Name</th>         
+                                <th>Address</th>         
+                                <th>Mobile</th>         
+                                <th>Department</th>   
+                                <th>Role</th>         
+                                <th>Date</th>         
                                 <th>Function</th>                                
                             </tr>
                         </thead>
-                        <tbody>
-                            {arrayofObject.map(dep=>
-                                <tr key={dep.id}>
-                                    <td>{dep.id}</td>
-                                    <td>{dep.depname}</td>
+                        <tbody> 
+                            {arrayofObject.map(emp=>
+                                <tr key={emp.id}>
+                                    <td>{emp.id}</td>
+                                    <td>{emp.name}</td>
+                                    <td>{emp.address}</td>
+                                    <td>{emp.mobileNo}</td>
+                                    <td>{emp.depid}</td>
+                                    <td>{emp.role}</td>
+                                    <td>{emp.dateat}</td>
                                     <td>
                                     <ButtonToolbar> 
-                                        <Button variant="info" className="sm-2 mr-2" onClick={()=>this.setState({onModelShowUpdate:true,depid:dep.id,depname:dep.depname})} >Update</Button>
+                                        <Button variant="info" className="sm-2 mr-2" onClick={()=>this.setState({onModelShowUpdate:true,depid:emp.id,depname:emp.name})} >Update</Button>
                                         
-                                        <Button variant="danger" className="sm-2  mr-2"  onClick={()=>this.deleteDepartment_UsingGET(dep.id)}>Delete GET</Button>
-                                        
-                                         <Button variant="warning" className="sm-2  mr-2"  onClick={()=>this.deleteDepartment(dep.id)}>Delete POST</Button> 
-
-                                        <ModelUpdateDepartment show={this.state.onModelShowUpdate} onHide={modelCloseUpdate} depid={depid} depname={depname} />
-                                        
+                                        <Button variant="danger" className="sm-2  mr-2"  onClick={()=>this.deleteDepartment_UsingGET(emp.id)}>Delete</Button>
+                                     
                                     </ButtonToolbar> 
                                     </td>
                                 </tr>

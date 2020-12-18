@@ -17,7 +17,7 @@ export default class Navigation extends Component
 
                             <NavLink className="d-flex p-2 bg-dark text-white" to="/Department">Department</NavLink>
 
-                            <NavLink className="d-flex p-2 bg-dark text-white" to="/Employee">Employee</NavLink>
+                            <NavLink className="d-flex p-2 bg-dark text-white" to="/EmployeeManage">Employee</NavLink>
                             
                        </Nav>
                   </Navbar.Collapse>
