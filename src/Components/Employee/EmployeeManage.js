@@ -82,7 +82,7 @@ export default class EmployeeManage extends Component{
                 
                 <br/>
                 <ButtonToolbar> 
-                    <Button variant="primary" onClick={()=>this.setState({onModelShow:true})} >Add Department</Button>
+                    <Button variant="primary" onClick={()=>this.setState({onModelShow:true})} >Add Employee</Button>
                     <AddEmployeeModel show={this.state.onModelShow} onHide={modelClose}/>
                 </ButtonToolbar> 
 
