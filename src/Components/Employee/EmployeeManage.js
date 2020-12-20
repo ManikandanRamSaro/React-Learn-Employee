@@ -2,6 +2,8 @@ import React,{Component} from 'react';
 import {Table,Button} from 'react-bootstrap';
 import {ButtonToolbar} from 'react-bootstrap'; 
 import AddEmployeeModel from './AddEmployeeModel';
+
+import {NavLink} from 'react-router-dom';
 export default class EmployeeManage extends Component{
 
     constructor(props)
@@ -57,19 +59,7 @@ export default class EmployeeManage extends Component{
        // event.preventDefault();
         
     }
-    deleteDepartment_UsingGET(depid){
-        if(window.confirm('Do you want to delete data ?'))
-        {
-            fetch('http://localhost:62489/api/Default/deleteDepart/'+depid,{
-                method:'GET',
-                headers:{
-                    'Accept':'application/json',
-                    'Content-Type':'application/json'
-                }
-            }) 
-        } 
-        
-    }
+    
     render()
     {
         const {depid,depname}= this.state; // for Update Model popup
@@ -84,8 +74,10 @@ export default class EmployeeManage extends Component{
                 <ButtonToolbar> 
                     <Button variant="primary" onClick={()=>this.setState({onModelShow:true})} >Add Employee</Button>
                     <AddEmployeeModel show={this.state.onModelShow} onHide={modelClose}/>
+                    <NavLink className="btn-info sm-2 p-2" to="/Datatable">Employees List</NavLink>
                 </ButtonToolbar> 
-
+                
+               
                 <Table className="mt-2"  striped bordered hover>
                         <thead>
                             <tr>
