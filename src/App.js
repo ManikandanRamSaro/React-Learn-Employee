@@ -8,6 +8,7 @@ import EmployeeManage from './Components/Employee/EmployeeManage';
 import EmployeesListDatatable from './Components/Employee/EmployeesListDatatable';
 import Navigation from './Components/Navigation';
 import LearningSite from './Components/LearningSite';
+import basicForm from './Components/ClassEventsViewer/basicForm';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 function App() {
   return (
@@ -23,7 +24,8 @@ function App() {
             <Route path="/EmployeeManage" component={EmployeeManage}/>
             <Route path="/Datatable" component={EmployeesListDatatable}/>
             <Route path="/learn" component={LearningSite}/>
-            <Route path="/nav" component={Navigation}/>
+            <Route path="/nav" component={Navigation}/> 
+            <Route path="/evnetswithClass" component={basicForm}/>
         </Switch>
     </div>
     </BrowserRouter>
