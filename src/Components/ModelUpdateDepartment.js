@@ -18,7 +18,8 @@ export default class ModelUpdateDepartment extends Component{
 
     handleSubmit(event){
         event.preventDefault();
-        fetch('http://localhost:62489/api/Default/updateDepart',{
+        //http://localhost:62489/api/Default/updateDepart
+        fetch('http://localhost/ReactWebAPI/api/Default/updateDepart',{  
             method:'POST',
             headers:{
                 'Accept':'application/json',

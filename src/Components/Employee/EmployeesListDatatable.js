@@ -42,7 +42,8 @@ export default class EmployeesListDatatable extends Component{
 
 
     loadDynamicData(){
-        fetch('http://localhost:62489/api/default/GetEmplpoyeesList')
+        //http://localhost:62489/api/default/GetEmplpoyeesList
+        fetch('http://localhost/ReactWebAPI/api/default/GetEmplpoyeesList')  
         .then(response=>response.json())
         .then(output=>{
             this.setState({arrayofObject:output})

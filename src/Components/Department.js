@@ -21,7 +21,8 @@ export default class Department extends Component{
 
 
     loadDynamicData(){
-        fetch('http://localhost:62489/api/default/GetDepartmentsList')
+        //http://localhost:62489/api/default/GetDepartmentsList
+        fetch('http://localhost/ReactWebAPI/api/default/GetDepartmentsList')  
         .then(response=>response.json())
         .then(output=>{
             this.setState({arrayofObject:output})
@@ -35,7 +36,8 @@ export default class Department extends Component{
     deleteDepartment(depid){
         if(window.confirm('Do you want to delete data ?'))
         {
-            fetch('http://localhost:62489/api/Default/deleteDepart',{
+            //http://localhost:62489/api/Default/deleteDepart
+            fetch('http://localhost/ReactWebAPI/api/Default/deleteDepart',{ 
                 method:'POST',
                 headers:{
                     'Accept':'application/json',
@@ -61,7 +63,8 @@ export default class Department extends Component{
     deleteDepartment_UsingGET(depid){
         if(window.confirm('Do you want to delete data ?'))
         {
-            fetch('http://localhost:62489/api/Default/deleteDepart/'+depid,{
+            //'http://localhost:62489/api/Default/deleteDepart/'
+            fetch('http://localhost/ReactWebAPI/api/Default/deleteDepart/'+depid,{
                 method:'GET',
                 headers:{
                     'Accept':'application/json',

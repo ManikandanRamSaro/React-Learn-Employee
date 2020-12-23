@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker} from '@material-ui/pickers';
+import FirstClass from '../ClassAndObjects/FirstClass';
 
 export default class AddEmployeeModel extends Component{
 
@@ -25,7 +26,7 @@ export default class AddEmployeeModel extends Component{
 
     componentDidMount()
     {
-        fetch('http://localhost:62489/api/default/GetDepartmentsList')
+        fetch('http://localhost/ReactWebAPI/api/default/GetDepartmentsList')
         .then(response=>response.json())
         .then(output=>{
             this.setState({departList:output})
@@ -35,15 +36,20 @@ export default class AddEmployeeModel extends Component{
         event.preventDefault();
         let depidis=0
         var listof=this.state.departList;
-        for(let i=0;i<listof.length;i++)
-        {
-            if(listof[i].depname===event.target.depid.value)
-            {
-                depidis=listof[i].id;
-            }
-        }
+        // for(let i=0;i<listof.length;i++)
+        // {
+        //     if(listof[i].depname===event.target.depid.value)
+        //     {
+        //         depidis=listof[i].id;
+        //     }
+        // }
+         //http://localhost:62489/api/Default/addEmployee
+
+        
+        const dtclass=new FirstClass();
+        let doj=dtclass.dateFormatParser(this.state.doj,'DB'); 
          
-        fetch('http://localhost:62489/api/Default/addEmployee',{
+        fetch('http://localhost/ReactWebAPI/api/Default/addEmployee',{ 
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -54,9 +60,9 @@ export default class AddEmployeeModel extends Component{
                 name:event.target.name.value,
                 address:event.target.address.value,
                 mobileNo:event.target.mobileNo.value,
-                depid:depidis,//event.target.depid.value,
+                depid:event.target.depid.value,
                 role:event.target.role.value,
-                dateat:event.target.dateat.value
+                dateat:doj
             })
          })
             .then(res=>res.json())
@@ -133,7 +139,7 @@ export default class AddEmployeeModel extends Component{
                                 <Form.Label>Employee Department</Form.Label>
                                 <Form.Control as="select"  name="depid">
                                     {this.state.departList.map(dep =>
-                                        <option key={dep.id}>{dep.depname}</option>
+                                        <option key={dep.id} value={dep.id}>{dep.depname}</option>
                                     )}
                                 </Form.Control>
                             </Form.Group>
@@ -165,6 +171,7 @@ export default class AddEmployeeModel extends Component{
                                 
                                    
                                     <KeyboardDatePicker
+                                    name="dateat"
                                     margin="normal"
                                     id="date-picker-dialog"
                                     label="Date of Join"

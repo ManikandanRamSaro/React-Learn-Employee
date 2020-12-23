@@ -4,6 +4,7 @@ import {ButtonToolbar} from 'react-bootstrap';
 import AddEmployeeModel from './AddEmployeeModel';
 
 import {NavLink} from 'react-router-dom';
+import FirstClass from '../ClassAndObjects/FirstClass';
 export default class EmployeeManage extends Component{
 
     constructor(props)
@@ -22,7 +23,8 @@ export default class EmployeeManage extends Component{
 
 
     loadDynamicData(){
-        fetch('http://localhost:62489/api/default/GetEmplpoyeesList')
+        //http://localhost:62489/api/default/GetEmplpoyeesList
+        fetch('http://localhost/ReactWebAPI/api/default/GetEmplpoyeesList')  
         .then(response=>response.json())
         .then(output=>{
             this.setState({arrayofObject:output})
@@ -36,7 +38,8 @@ export default class EmployeeManage extends Component{
     deleteDepartment(depid){
         if(window.confirm('Do you want to delete data ?'))
         {
-            fetch('http://localhost:62489/api/Default/deleteDepart',{
+            //http://localhost:62489/api/Default/deleteDepart
+            fetch('http://localhost/ReactWebAPI/api/Default/deleteDepart',{  
                 method:'POST',
                 headers:{
                     'Accept':'application/json',
@@ -67,6 +70,8 @@ export default class EmployeeManage extends Component{
         const {arrayofObject} =this.state; //table binding properties
         const modelClose=()=>{this.setState({onModelShow:false})} // binding properties
         const modelCloseUpdate=()=>{this.setState({onModelShowUpdate:false})} // binding properties for edit operation
+
+        const fs=new FirstClass();
         return(
             <div >
                 
@@ -100,7 +105,7 @@ export default class EmployeeManage extends Component{
                                     <td>{emp.mobileNo}</td>
                                     <td>{emp.depid}</td>
                                     <td>{emp.role}</td>
-                                    <td>{emp.dateat}</td>
+                                    <td>{fs.dateFormatParser(emp.dateat,'display')}</td>
                                     <td>
                                     <ButtonToolbar> 
                                         <Button variant="info" className="sm-2 mr-2" onClick={()=>this.setState({onModelShowUpdate:true,depid:emp.id,depname:emp.name})} >Update</Button>

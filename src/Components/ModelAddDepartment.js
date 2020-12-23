@@ -18,7 +18,9 @@ export default class ModelAddDepartment extends Component{
 
     handleSubmit(event){
         event.preventDefault();
-        fetch('http://localhost:62489/api/Default/addDepart',{
+
+        //http://localhost:62489/api/Default/addDepart
+        fetch('http://localhost/ReactWebAPI/api/Default/addDepart',{  
             method:'POST',
             headers:{
                 'Accept':'application/json',
