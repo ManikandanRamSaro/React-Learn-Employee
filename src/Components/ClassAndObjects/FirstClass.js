@@ -37,4 +37,10 @@ export default class FirstClass
         let list=unorder.sort((a,b)=>a-b);
         return list.toString();
     }
+
+    returnListofData()
+    {
+        let obj=[{id:1,name:'Ramalingam'},{id:2,name:'Saroja'},{id:3,name:'Indira'},{id:4,name:'Durai'},{id:5,name:'Mani'},{id:6,name:'Sathiya'}]
+        return obj;
+    }
 }
