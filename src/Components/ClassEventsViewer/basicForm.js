@@ -8,8 +8,13 @@ export default class basicForm extends Component{
         super(props);
 
         this.state = { counts:0,valuesOut:'',selectList:[]} 
+        this.formSUbmit= this.formSUbmit.bind(this);
     }
 
+    formSUbmit(event)
+    {
+        console.log(event)
+    }
     componentDidMount()
     { 
         const manage=new FirstClass();  
@@ -25,7 +30,7 @@ export default class basicForm extends Component{
 
     getTextDropdown(event) 
     { 
-        const obje=new FirstClass();   
+        const obje=new FirstClass();    
         var index = event.nativeEvent.target.selectedIndex; // get index of the selected list
         
         let input = event.nativeEvent.target[index].text;  // based on index get record from select
@@ -47,7 +52,7 @@ export default class basicForm extends Component{
                         <Form  >
                             <Row>
                                 <Col sm={12} md={6}>
-                                    <Form.Group >
+                                    <Form.Group onSubmit={this.formSUbmit}>
                                         <Form.Label>To Upper</Form.Label>
                                         <Form.Control type="text" onKeyUp={this.getText.bind(this)} placeholder="text here" required/>
                                      </Form.Group>
@@ -76,9 +81,9 @@ export default class basicForm extends Component{
                             </Row>
                            
                            
-                            {/* <Form.Group>
+                            <Form.Group>
                                 <Button variant="primary" type="submit">Submit</Button>
-                            </Form.Group> */}
+                            </Form.Group> 
                       </Form>
            </div>
         );
