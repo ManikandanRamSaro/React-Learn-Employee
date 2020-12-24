@@ -10,6 +10,8 @@ import Navigation from './Components/Navigation';
 import LearningSite from './Components/LearningSite';
 import basicForm from './Components/ClassEventsViewer/basicForm';
 import simpleForm from './Components/ClassEventsViewer/simpleForm';
+import formikaForm from './Components/ClassEventsViewer/formikaForm';
+
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 function App() {
   return (
@@ -28,6 +30,7 @@ function App() {
             <Route path="/nav" component={Navigation}/> 
             <Route path="/evnetswithClass" component={basicForm}/>
             <Route path="/simple" component={simpleForm}/>
+            <Route path="/formika" component={formikaForm}/>
             
         </Switch>
     </div>
