@@ -3,6 +3,7 @@ import {Table,Button} from 'react-bootstrap';
 import {ButtonToolbar} from 'react-bootstrap';
 import ModelAddDepartment from './ModelAddDepartment'; 
 import ModelUpdateDepartment from './ModelUpdateDepartment';
+import APIService from './ClassAndObjects/APIService';
 export default class Department extends Component{
 
     constructor(props)
@@ -22,9 +23,11 @@ export default class Department extends Component{
 
     loadDynamicData(){
         //http://localhost:62489/api/default/GetDepartmentsList
-        fetch('http://localhost/ReactWebAPI/api/default/GetDepartmentsList')  
-        .then(response=>response.json())
-        .then(output=>{
+        // fetch('http://localhost/ReactWebAPI/api/default/GetDepartmentsList')  
+        // .then(response=>response.json())
+
+        const apicall=new APIService();
+        apicall.getDepartmentList().then(output=>{
             this.setState({arrayofObject:output})
         })
     }
@@ -37,17 +40,25 @@ export default class Department extends Component{
         if(window.confirm('Do you want to delete data ?'))
         {
             //http://localhost:62489/api/Default/deleteDepart
-            fetch('http://localhost/ReactWebAPI/api/Default/deleteDepart',{ 
-                method:'POST',
-                headers:{
-                    'Accept':'application/json',
-                    'Content-Type':'application/json'
-                },
-                body:JSON.stringify({
-                    id:depid,
-                    depname:null
-                })
-             })
+            // fetch('http://localhost/ReactWebAPI/api/Default/deleteDepart',{ 
+            //     method:'POST',
+            //     headers:{
+            //         'Accept':'application/json',
+            //         'Content-Type':'application/json'
+            //     },
+            //     body:JSON.stringify({
+            //         id:depid,
+            //         depname:null
+            //     })
+            //  })
+                    let params=JSON.stringify({
+                        id:depid,
+                        depname:null
+                    });
+
+                const apiCall = new APIService();
+
+                apiCall.postDeleteDepartmnet(params)
                 .then(res=>res.json())
                 .then((result)=>{ 
                     console.log(result) 
@@ -64,13 +75,16 @@ export default class Department extends Component{
         if(window.confirm('Do you want to delete data ?'))
         {
             //'http://localhost:62489/api/Default/deleteDepart/'
-            fetch('http://localhost/ReactWebAPI/api/Default/deleteDepart/'+depid,{
-                method:'GET',
-                headers:{
-                    'Accept':'application/json',
-                    'Content-Type':'application/json'
-                }
-            }) 
+            // fetch('http://localhost/ReactWebAPI/api/Default/deleteDepart/'+depid,{
+            //     method:'GET',
+            //     headers:{
+            //         'Accept':'application/json',
+            //         'Content-Type':'application/json'
+            //     }
+            // }) 
+            const apiCall = new APIService();
+
+            apiCall.getDeleteDepartmnet(depid);
         } 
         
     }

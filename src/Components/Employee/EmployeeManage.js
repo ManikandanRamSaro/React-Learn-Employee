@@ -5,6 +5,7 @@ import AddEmployeeModel from './AddEmployeeModel';
 
 import {NavLink} from 'react-router-dom';
 import FirstClass from '../ClassAndObjects/FirstClass';
+import APIService from '../ClassAndObjects/APIService';
 export default class EmployeeManage extends Component{
 
     constructor(props)
@@ -24,11 +25,17 @@ export default class EmployeeManage extends Component{
 
     loadDynamicData(){
         //http://localhost:62489/api/default/GetEmplpoyeesList
-        fetch('http://localhost/ReactWebAPI/api/default/GetEmplpoyeesList')  
-        .then(response=>response.json())
-        .then(output=>{
-            this.setState({arrayofObject:output})
-        })
+        // fetch('http://localhost/ReactWebAPI/api/default/GetEmplpoyeesList')  
+        // .then(response=>response.json())
+        // .then(output=>{
+        //     this.setState({arrayofObject:output})
+        // })
+        const apiCall=new APIService();
+        apiCall.getEmployeesList().then(output=>
+            {
+                
+                this.setState({arrayofObject:output})
+            })
     }
 
     componentDidUpdate()  // based on change event this will automatically load data

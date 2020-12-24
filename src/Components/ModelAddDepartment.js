@@ -3,6 +3,7 @@ import {Row,Col,Model,Button,Form,Modal} from 'react-bootstrap';
 import SnackBar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 
+import APIService from './ClassAndObjects/APIService';
 export default class ModelAddDepartment extends Component{
 
     constructor(props){
@@ -20,18 +21,26 @@ export default class ModelAddDepartment extends Component{
         event.preventDefault();
 
         //http://localhost:62489/api/Default/addDepart
-        fetch('http://localhost/ReactWebAPI/api/Default/addDepart',{  
-            method:'POST',
-            headers:{
-                'Accept':'application/json',
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify({
-                id:null,
-                depname:event.target.depname.value
-            })
-         })
-            .then(res=>res.json())
+        // fetch('http://localhost/ReactWebAPI/api/Default/addDepart',{  
+        //     method:'POST',
+        //     headers:{
+        //         'Accept':'application/json',
+        //         'Content-Type':'application/json'
+        //     },
+        //     body:JSON.stringify({
+        //         id:null,
+        //         depname:event.target.depname.value
+        //     })
+        //  })
+        //     .then(res=>res.json())
+            let form=JSON.stringify({
+                        id:null,
+                        depname:event.target.depname.value
+                    })
+
+            const apiCall = new APIService();
+
+            apiCall.postAddDepartment(form)
             .then((result)=>{
                 this.setState({snackbarOpen:true,messageDis:'New Department Added'})
                 console.log(result) 
