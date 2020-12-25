@@ -48,4 +48,18 @@ export default class APIService
          })
         .then(res=>res.json())
     }
+
+    fileUpload(params)
+    {
+        return   fetch('http://localhost:90/react/fileUpload.php',{  
+            method:'POST',
+            // headers:{
+            //     'content-type': 'multipart/form-data' 
+            // },
+            body:params
+         })
+        .then(res=>res.json())
+
+        
+    }
 }
